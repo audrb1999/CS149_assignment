@@ -1,6 +1,6 @@
 # CS149_assignment
 
-## 현재 진행 사항
+## current progress
 
 Program assignment 
 - Assignment 1: Performance Analysis on a Quad-Core CPU
