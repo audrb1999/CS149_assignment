@@ -3,7 +3,7 @@
 ## current progress
 
 Program assignment 
-- Assignment 1: Performance Analysis on a Quad-Core CPU: part 1,2 완료
+- Assignment 1: Performance Analysis on a Quad-Core CPU: part 1,2 까지 진행
  
  </br>
 
