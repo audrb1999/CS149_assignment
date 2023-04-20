@@ -20,6 +20,8 @@ float arraySumSerial(float* values, int N);
 float arraySumVector(float* values, int N);
 bool verifyResult(float* values, int* exponents, float* output, float* gold, int N);
 
+
+
 int main(int argc, char * argv[]) {
   int N = 16;
   bool printLog = false;
@@ -54,7 +56,7 @@ int main(int argc, char * argv[]) {
   }
 
 
-  float* values = new float[N+VECTOR_WIDTH];
+  float* values = new float[N+VECTOR_WIDTH]; // N + SIMD에 사용되는 벡터 길이, N은 값 변경 가능
   int* exponents = new int[N+VECTOR_WIDTH];
   float* output = new float[N+VECTOR_WIDTH];
   float* gold = new float[N+VECTOR_WIDTH];
@@ -110,6 +112,7 @@ void usage(const char* progname) {
   printf("  -?  --help         This message\n");
 }
 
+// random 값을 저장
 void initValue(float* values, int* exponents, float* output, float* gold, unsigned int N) {
 
   for (unsigned int i=0; i<N+VECTOR_WIDTH; i++)
@@ -122,6 +125,7 @@ void initValue(float* values, int* exponents, float* output, float* gold, unsign
   }
 
 }
+
 
 bool verifyResult(float* values, int* exponents, float* output, float* gold, int N) {
   int incorrect = -1;
@@ -218,8 +222,11 @@ void absVector(float* values, float* output, int N) {
 // accepts an array of values and an array of exponents
 //
 // For each element, compute values[i]^exponents[i] and clamp value to
-// 9.999.  Store result in output.
+// 9.999.  Store result in output. (실질적인 계산 부분)
 void clampedExpSerial(float* values, int* exponents, float* output, int N) {
+
+
+
   for (int i=0; i<N; i++) {
     float x = values[i];
     int y = exponents[i];
@@ -238,8 +245,11 @@ void clampedExpSerial(float* values, int* exponents, float* output, int N) {
       output[i] = result;
     }
   }
+
+
 }
 
+// feel this section ()
 void clampedExpVector(float* values, int* exponents, float* output, int N) {
 
   //
@@ -249,6 +259,107 @@ void clampedExpVector(float* values, int* exponents, float* output, int N) {
   // Your solution should work for any value of
   // N and VECTOR_WIDTH, not just when VECTOR_WIDTH divides N
   //
+    
+
+/* 1차 시도: ./myexp -s 10000을 명령으로 줬을 때 Failed가 발생하는 문제가 존재
+* 
+    __cs149_vec_float x;
+    __cs149_vec_int y;
+    __cs149_vec_float result;
+
+    __cs149_vec_int zeros = _cs149_vset_int(0);
+    __cs149_vec_int int_ones = _cs149_vset_int(1);
+    __cs149_vec_float limit = _cs149_vset_float(9.999999f);
+
+  
+    __cs149_mask mask_Exp, mask_Max, maskZero, maskNotZero;
+
+    __cs149_mask maskAct = _cs149_init_ones();
+  
+
+    
+    
+    for (int i = 0; i < N; i += VECTOR_WIDTH) {
+        
+        if (N % VECTOR_WIDTH != 0 && i == N) {
+            maskAct = _cs149_init_ones(N % VECTOR_WIDTH);
+        }
+        
+        _cs149_vload_float(x, values + i, maskAct); // x = values[i];
+        _cs149_vload_int(y, exponents + i, maskAct); // y = exponents[i];
+
+        _cs149_veq_int(maskZero, y, zeros, maskAct);// if (y==0){
+        _cs149_vset_float(result, 1.f, maskZero);// result = x;} 
+
+        maskNotZero = _cs149_mask_not(maskZero); // else{
+        _cs149_vload_float(result, values + i, maskAct);// result = x;
+
+       _cs149_vgt_int(mask_Exp, y, zeros, maskAct); // // if (y == 0) 아닐 때
+        
+        while (_cs149_cntbits(mask_Exp) > 0) {
+            _cs149_vsub_int(y, y, int_ones, mask_Exp);// mask_Exp가 ture인 경우 y = y - 1
+            _cs149_vgt_int(mask_Exp, y, zeros, mask_Exp);// y값을 다시 확인하여 반복
+            _cs149_vmult_float(result, result, x, mask_Exp); 
+
+        }
+        
+        _cs149_vgt_float(mask_Max, result, limit, maskAct);//  if (result > 9.999999f)
+        _cs149_vset_float(result, 9.999999f, mask_Max);// result = 9.999999f;
+        _cs149_vstore_float(output + i * VECTOR_WIDTH, result, maskAct);
+
+
+
+
+    }
+    
+*/
+
+
+
+    
+    __cs149_vec_float x;
+    __cs149_vec_int y;
+    __cs149_vec_float result;
+
+    __cs149_vec_int zeros = _cs149_vset_int(0);
+    __cs149_vec_int int_ones = _cs149_vset_int(1);
+    __cs149_vec_float ones = _cs149_vset_float(1.f);
+    __cs149_vec_float limit = _cs149_vset_float(9.999999f);
+
+    __cs149_mask mask_Exp, mask_Max;
+    __cs149_mask maskAct = _cs149_init_ones();
+
+
+    int numBatch = (N + VECTOR_WIDTH - 1) / VECTOR_WIDTH;
+
+    for (int i = 0; i < numBatch; i++) {
+        result = _cs149_vset_float(1.f);// if (y == 0)일 때 result에 1.f 부분
+
+        if (N % VECTOR_WIDTH != 0 && i == numBatch - 1) {
+            maskAct = _cs149_init_ones(N % VECTOR_WIDTH);
+        }
+
+        // VECTOR_WIDTH씩 인덱스를 증가시켜줘야합니다.
+        _cs149_vload_float(x, values + i * VECTOR_WIDTH, maskAct);// x = values[i]
+        _cs149_vload_int(y, exponents + i * VECTOR_WIDTH, maskAct);// y = exponents[i]
+
+        _cs149_vgt_int(mask_Exp, y, zeros, maskAct); // // if (y == 0) 아닐 때
+        
+        while (_cs149_cntbits(mask_Exp) > 0) {
+            _cs149_vmult_float(result, result, x, mask_Exp); 
+            _cs149_vsub_int(y, y, int_ones, mask_Exp);// mask_Exp가 ture인 경우 y = y - 1
+            _cs149_vgt_int(mask_Exp, y, zeros, mask_Exp);// y값을 다시 확인하여 반복
+        }
+        
+        _cs149_vgt_float(mask_Max, result, limit, maskAct);//  if (result > 9.999999f)
+        _cs149_vset_float(result, 9.999999f, mask_Max);// result = 9.999999f;
+        _cs149_vstore_float(output + i * VECTOR_WIDTH, result, maskAct);
+
+
+   }
+   
+   
+
   
 }
 

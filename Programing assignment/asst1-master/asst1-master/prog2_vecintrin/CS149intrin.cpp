@@ -5,6 +5,7 @@
 //* Implementation *
 //******************
 
+
 __cs149_mask _cs149_init_ones(int first) {
   __cs149_mask mask;
   for (int i=0; i<VECTOR_WIDTH; i++) {
@@ -12,6 +13,7 @@ __cs149_mask _cs149_init_ones(int first) {
   }
   return mask;
 }
+
 
 __cs149_mask _cs149_mask_not(__cs149_mask &maska) {
   __cs149_mask resultMask;
@@ -40,6 +42,7 @@ __cs149_mask _cs149_mask_and(__cs149_mask &maska, __cs149_mask &maskb) {
   return resultMask;
 }
 
+// 
 int _cs149_cntbits(__cs149_mask &maska) {
   int count = 0;
   for (int i=0; i<VECTOR_WIDTH; i++) {
@@ -188,6 +191,7 @@ template void _cs149_vabs<int>(__cs149_vec_int &vecResult, __cs149_vec_int &veca
 void _cs149_vabs_float(__cs149_vec_float &vecResult, __cs149_vec_float &veca, __cs149_mask &mask) { _cs149_vabs<float>(vecResult, veca, mask); }
 void _cs149_vabs_int(__cs149_vec_int &vecResult, __cs149_vec_int &veca, __cs149_mask &mask) { _cs149_vabs<int>(vecResult, veca, mask); }
 
+// 
 template <typename T>
 void _cs149_vgt(__cs149_mask &maskResult, __cs149_vec<T> &veca, __cs149_vec<T> &vecb, __cs149_mask &mask) {
   for (int i=0; i<VECTOR_WIDTH; i++) {
