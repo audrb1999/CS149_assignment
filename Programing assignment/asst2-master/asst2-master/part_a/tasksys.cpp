@@ -28,8 +28,8 @@ TaskSystemSerial::TaskSystemSerial(int num_threads): ITaskSystem(num_threads) {
 
 TaskSystemSerial::~TaskSystemSerial() {}
 
-/* run ±¸Çö, (IRunnaable)runable°ú num_total_tasks¸¦ ¹Ş¾Æ¼­
-*  num_total_tasks ¸¸Å­ runTask¸¦ ÁøÇà
+/* run êµ¬í˜„, (IRunnaable)runableê³¼ num_total_tasksë¥¼ ë°›ì•„ì„œ
+*  num_total_tasks ë§Œí¼ runTaskë¥¼ ì§„í–‰
 */
 void TaskSystemSerial::run(IRunnable* runnable, int num_total_tasks) {
     for (int i = 0; i < num_total_tasks; i++) { 
@@ -81,14 +81,14 @@ void TaskSystemParallelSpawn::runThreadParallelSpawn(IRunnable* runnable, std::a
     // tasks sequentially on the calling thread.
     //
 
-    // forÀ» »ç¿ëÇÏ¸é ¼øÂ÷ÀûÀ¸·Î µÇÁö¸¸ whileÀ» »ç¿ëÇÏ¸é º´·ÄÃ³¸®°¡ µÊ, forµµ º´·ÄÃ³¸®¸¦ Áö¿øÇÏ´Âµ¥ ¿Ö ÀÌ·± ¹®Á¦°¡ ¹ß»ıÇßÁö?
+    // forì„ ì‚¬ìš©í•˜ë©´ ìˆœì°¨ì ìœ¼ë¡œ ë˜ì§€ë§Œ whileì„ ì‚¬ìš©í•˜ë©´ ë³‘ë ¬ì²˜ë¦¬ê°€ ë¨, forë„ ë³‘ë ¬ì²˜ë¦¬ë¥¼ ì§€ì›í•˜ëŠ”ë° ì™œ ì´ëŸ° ë¬¸ì œê°€ ë°œìƒí–ˆì§€?
     /*
     for(int i = current_task; i < num_total_tasks; i++){
         runnable->runTask(i, num_total_tasks);
     }*/
     
 
-    // ÃÑ ÀÛ¾÷ ¼ö¸¸Å­ ¹İº¹µÊ (0~128¹ø °¢ ½º·¹µå¸¶´Ù)
+    // ì´ ì‘ì—… ìˆ˜ë§Œí¼ ë°˜ë³µë¨ (0~128ë²ˆ ê° ìŠ¤ë ˆë“œë§ˆë‹¤)
     
     int i;
     while ((i = current_task++) < num_total_tasks) {
@@ -106,11 +106,11 @@ void TaskSystemParallelSpawn::run(IRunnable* runnable, int num_total_tasks) {
 
     /*
     std::vector<std::thread> threads;
-    std::atomic_int current_task(0); // °øÅëÀûÀ¸·Î Á¢±ÙµÇ¾î¼­ »ç¿ëµÇ´Ï atomicÀ¸·Î
+    std::atomic_int current_task(0); // ê³µí†µì ìœ¼ë¡œ ì ‘ê·¼ë˜ì–´ì„œ ì‚¬ìš©ë˜ë‹ˆ atomicìœ¼ë¡œ
     
     for (int i = 0; i < this->num_threads; i++) {
         threads.push_back(std::thread(&TaskSystemParallelSpawn::runThreadParallelSpawn, this, runnable, std::ref(current_task), num_total_tasks));
-        // thread.push_back(std::thread(function)); ´ÙÀ½°ú °°ÀÌ ½º·¹µå¸¦ Ãß°¡, ¿©±â¼­ ÇÊ¿äÇÑ ÀÎÀÚµµ ³Ö´Â Çü½ÄÀ¸·Î ÁøÇà
+        // thread.push_back(std::thread(function)); ë‹¤ìŒê³¼ ê°™ì´ ìŠ¤ë ˆë“œë¥¼ ì¶”ê°€, ì—¬ê¸°ì„œ í•„ìš”í•œ ì¸ìë„ ë„£ëŠ” í˜•ì‹ìœ¼ë¡œ ì§„í–‰
     }
     for (int i = 0; i < this->num_threads; i++) {
         threads[i].join();
@@ -118,9 +118,9 @@ void TaskSystemParallelSpawn::run(IRunnable* runnable, int num_total_tasks) {
     */ 
     
 
-    // ÀÌ ÄÚµåÀÇ °æ¿ì 389.440 ms·Î ¿ÀÈ÷·Á ´À·ÁÁü = atomic variableÀ» »ç¿ëÇÏÁö ¾Ê¾Æ¼­ serialÇÏ°Ô ½ÇÇàµÇ´Â °ÍÀÌ ¿øÀÎ °°À½
-    // atomic variableÀ» »ç¿ëÇØµµ ¼Óµµ°¡ º¯ÇÏÁö ¾ÊÀ½ -> runThread ºÎºĞ¿¡¼­ serialÇÏ°Ô µ¿ÀÛÇÏ´Â ¿øÀÎÀÌ ÀÖ´Â °Í °°À½
-    // thread °³¼ö¸¸Å­ ½º·¹µå¸¦ ¸¸µé°í ÁøÇà
+    // ì´ ì½”ë“œì˜ ê²½ìš° 389.440 msë¡œ ì˜¤íˆë ¤ ëŠë ¤ì§ = atomic variableì„ ì‚¬ìš©í•˜ì§€ ì•Šì•„ì„œ serialí•˜ê²Œ ì‹¤í–‰ë˜ëŠ” ê²ƒì´ ì›ì¸ ê°™ìŒ
+    // atomic variableì„ ì‚¬ìš©í•´ë„ ì†ë„ê°€ ë³€í•˜ì§€ ì•ŠìŒ -> runThread ë¶€ë¶„ì—ì„œ serialí•˜ê²Œ ë™ì‘í•˜ëŠ” ì›ì¸ì´ ìˆëŠ” ê²ƒ ê°™ìŒ
+    // thread ê°œìˆ˜ë§Œí¼ ìŠ¤ë ˆë“œë¥¼ ë§Œë“¤ê³  ì§„í–‰
 
     
     std::thread my_thread[this->num_threads];
@@ -152,11 +152,11 @@ void TaskSystemParallelSpawn::sync() {
  */
 
 /*
-* 1. thread pool·Î »ç¿ëÇÒ ¼ö ÀÖ´Â work thread poolÀ» »ı¼º
-* 2. thread pool¿¡¼­ Å¥¿¡ taskÀ» Ãß°¡
-* 3. thread°¡ Å¥¿¡¼­ task¸¦ °¡Á®¿Í¼­ Ã³¸®ÇÏ´Âµ¥ ÀÌ¶§ mutex lockÀ» °ÉÀ½
-* 4. task°¡ ³¡³ª¸é »õ task¸¦ °¡Á®¿È
-* 5. À§ °úÁ¤À» ¹İº¹
+* 1. thread poolë¡œ ì‚¬ìš©í•  ìˆ˜ ìˆëŠ” work thread poolì„ ìƒì„±
+* 2. thread poolì—ì„œ íì— taskì„ ì¶”ê°€
+* 3. threadê°€ íì—ì„œ taskë¥¼ ê°€ì ¸ì™€ì„œ ì²˜ë¦¬í•˜ëŠ”ë° ì´ë•Œ mutex lockì„ ê±¸ìŒ
+* 4. taskê°€ ëë‚˜ë©´ ìƒˆ taskë¥¼ ê°€ì ¸ì˜´
+* 5. ìœ„ ê³¼ì •ì„ ë°˜ë³µ
 
 */
 
@@ -167,23 +167,23 @@ const char* TaskSystemParallelThreadPoolSpinning::name() {
 void TaskSystemParallelThreadPoolSpinning::runThreadParallelThreadPoolSpinning(int thread_number) {
     
 
-    while (!thread_state->done_flag) {// ½º·¹µå°¡ ³¡³ªÁö ¾Ê¾Ò´Ù¸é = ÁøÇàÁßÀÌ¶ó¸é
-        thread_state->main_mutex->lock(); // ¹ÂÅØ½º ¶ôÀ» °É°í
-        int i = thread_state->current_task; // i¸¦ ÇöÀç task·Î ¹Ù²Ş
-        int total_task = thread_state->num_total_tasks;// ÃÑ task¸¦ num task·Î ¹Ù²Ş
+    while (!thread_state->done_flag) {// ìŠ¤ë ˆë“œê°€ ëë‚˜ì§€ ì•Šì•˜ë‹¤ë©´ = ì§„í–‰ì¤‘ì´ë¼ë©´
+        thread_state->main_mutex->lock(); // ë®¤í…ìŠ¤ ë½ì„ ê±¸ê³ 
+        int i = thread_state->current_task; // ië¥¼ í˜„ì¬ taskë¡œ ë°”ê¿ˆ
+        int total_task = thread_state->num_total_tasks;// ì´ taskë¥¼ num taskë¡œ ë°”ê¿ˆ
 
-        if (total_task == 0 || i >= total_task) {// task°¡ ¿Ï·áµÇ¾ú´Ù¸é
-            thread_state->main_mutex->unlock();// ¶ôÀ» Ç®À½
-            // ¿Ï·áµÇ¾ú´ÂÁö while·Î continueÇØ¼­ È®ÀÎ
+        if (total_task == 0 || i >= total_task) {// taskê°€ ì™„ë£Œë˜ì—ˆë‹¤ë©´
+            thread_state->main_mutex->unlock();// ë½ì„ í’€ìŒ
+            // ì™„ë£Œë˜ì—ˆëŠ”ì§€ whileë¡œ continueí•´ì„œ í™•ì¸
             continue;
         }
 
-        thread_state->current_task++; //  ´Ù ³¡³ªÁö ¾Ê¾Ò´Ù¸é ÀÌ¾î¼­ ÁøÇà, »õ task¸¦ °¡Á®¿À°í
-        thread_state->main_mutex->unlock();// lockÀ» Ç®°í
-        thread_state->runnable->runTask(i, total_task); // ÀÛ¾÷À» ÇÒ´ç
-        thread_state->task_done_mutex->lock(); // ¿Ï·áµÈ ÀÛ¾÷ ¼ö¸¦ ¼öÁ¤ÇÒ ¶§ ´Ù¸¥ ½º·¹µåµéÀÌ Á¢±ÙÇÏÁö ¸øÇÏ°Ô
-        thread_state->task_done++;// ¿Ï·áµÈ ÀÛ¾÷ ¼ö Áõ°¡ ½ÃÅ°°í
-        thread_state->task_done_mutex->unlock(); // ´Ù½Ã lockÀ» Ç®À½
+        thread_state->current_task++; //  ë‹¤ ëë‚˜ì§€ ì•Šì•˜ë‹¤ë©´ ì´ì–´ì„œ ì§„í–‰, ìƒˆ taskë¥¼ ê°€ì ¸ì˜¤ê³ 
+        thread_state->main_mutex->unlock();// lockì„ í’€ê³ 
+        thread_state->runnable->runTask(i, total_task); // ì‘ì—…ì„ í• ë‹¹
+        thread_state->task_done_mutex->lock(); // ì™„ë£Œëœ ì‘ì—… ìˆ˜ë¥¼ ìˆ˜ì •í•  ë•Œ ë‹¤ë¥¸ ìŠ¤ë ˆë“œë“¤ì´ ì ‘ê·¼í•˜ì§€ ëª»í•˜ê²Œ
+        thread_state->task_done++;// ì™„ë£Œëœ ì‘ì—… ìˆ˜ ì¦ê°€ ì‹œí‚¤ê³ 
+        thread_state->task_done_mutex->unlock(); // ë‹¤ì‹œ lockì„ í’€ìŒ
      }
 }
 
@@ -193,16 +193,16 @@ TaskSystemParallelThreadPoolSpinning::TaskSystemParallelThreadPoolSpinning(int n
     // operations (such as thread pool construction) here.
     // Implementations are free to add new class member variables
     // (requiring changes to tasksys.h).
-    // ¿©±â¼­ ÁöÁ¤µÈ ¼öÀÇ ½º·¹µå¸¦ »ı¼º
-    this->thread_state = new ThreadState();// °¢ state¸¦ ¼³Á¤ÇØÁÖ´Â °´Ã¼¸¦ ¸¸µé°í
-    this->num_threads = num_threads;// ½º·¹µå °³¼ö¸¦ ¼³Á¤
+    // ì—¬ê¸°ì„œ ì§€ì •ëœ ìˆ˜ì˜ ìŠ¤ë ˆë“œë¥¼ ìƒì„±
+    this->thread_state = new ThreadState();// ê° stateë¥¼ ì„¤ì •í•´ì£¼ëŠ” ê°ì²´ë¥¼ ë§Œë“¤ê³ 
+    this->num_threads = num_threads;// ìŠ¤ë ˆë“œ ê°œìˆ˜ë¥¼ ì„¤ì •
     for (int i = 0; i < num_threads; i++) { 
         this->pool.push_back(std::thread(&TaskSystemParallelThreadPoolSpinning::runThreadParallelThreadPoolSpinning, this, i));
     }
 }
 
 
-// À§¿¡¼­ pool¿¡ ÀüºÎ pushÇÑ °æ¿ì ½ÇÇàÀÌ ³¡³¯ ¶§±îÁö ´ë±â
+// ìœ„ì—ì„œ poolì— ì „ë¶€ pushí•œ ê²½ìš° ì‹¤í–‰ì´ ëë‚  ë•Œê¹Œì§€ ëŒ€ê¸°
 TaskSystemParallelThreadPoolSpinning::~TaskSystemParallelThreadPoolSpinning() {
     this->thread_state->done_flag = true;
     for (int i = 0; i < this->num_threads; i++) {
@@ -212,7 +212,7 @@ TaskSystemParallelThreadPoolSpinning::~TaskSystemParallelThreadPoolSpinning() {
 
 void TaskSystemParallelThreadPoolSpinning::run(IRunnable* runnable, int num_total_tasks) {
     // std::cout << "start\n";
-    // state ÃÊ±âÈ­
+    // state ì´ˆê¸°í™”
     thread_state->main_mutex->lock();
     thread_state->current_task = 0;
     thread_state->runnable = runnable;
@@ -221,7 +221,7 @@ void TaskSystemParallelThreadPoolSpinning::run(IRunnable* runnable, int num_tota
     thread_state->task_done = 0;
     thread_state->main_mutex->unlock();
     bool done_work = false;
-    // ¸ğµç ÀÛ¾÷ÀÌ ¿Ï·áµÇ¾ú´ÂÁö È®ÀÎ
+    // ëª¨ë“  ì‘ì—…ì´ ì™„ë£Œë˜ì—ˆëŠ”ì§€ í™•ì¸
     while (!done_work) {
         thread_state->task_done_mutex->lock();
         done_work = thread_state->task_done >= thread_state->num_total_tasks;
@@ -252,14 +252,14 @@ const char* TaskSystemParallelThreadPoolSleeping::name() {
 void TaskSystemParallelThreadPoolSleeping::runThreadParallelThreadPoolSleeping(int thread_number) {
     while (!thread_state->done_flag) {
         std::unique_lock<std::mutex> main_lock(*thread_state->main_mutex);
-        // sleep thread worker when there is no work to execute
+        
         while ((thread_state->num_total_tasks == 0 || thread_state->current_task >= thread_state->num_total_tasks) &&
             !thread_state->done_flag) {
             thread_state->main_cr->wait(main_lock);
         }
         int i = thread_state->current_task;
         int total_task = thread_state->num_total_tasks;
-        // keep looping if current task is done
+        
         if (total_task == 0 || i >= total_task) {
             main_lock.unlock();
             continue;
@@ -267,11 +267,11 @@ void TaskSystemParallelThreadPoolSleeping::runThreadParallelThreadPoolSleeping(i
         thread_state->current_task++;
         main_lock.unlock();
         thread_state->runnable->runTask(i, total_task);
-        // increment task done counter
+        
         std::unique_lock<std::mutex> task_done_lock(*thread_state->task_done_mutex);
         thread_state->task_done++;
         task_done_lock.unlock();
-        // have one thread designated as the waker or wake when tasks are finished
+        
         if (thread_number == 0 || thread_state->task_done >= thread_state->num_total_tasks) {
             thread_state->task_done_cr->notify_one();
         }
@@ -332,7 +332,7 @@ void TaskSystemParallelThreadPoolSleeping::run(IRunnable* runnable, int num_tota
         if (thread_state->task_done < thread_state->num_total_tasks) {
             thread_state->main_cr->notify_all();
         }
-        // sleep main thread when all tasks are not done
+        
         while (thread_state->task_done < thread_state->num_total_tasks) {
             thread_state->task_done_cr->wait(task_done_lock);
         }
