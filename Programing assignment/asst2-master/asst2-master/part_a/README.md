@@ -12,7 +12,7 @@
 </br>
 </br>
 
-- loop로 인한 지연
+### loop로 인한 지연
 
 ![image](https://github.com/audrb1999/CS149_assignment/assets/68139415/2af3b1fd-05cb-4a99-b006-c6202fbc17fe)
 
@@ -21,7 +21,7 @@
 </br>
 </br>
 
-- Thread 교체가 없음
+### Thread 교체가 없음
 
 ![image](https://github.com/audrb1999/CS149_assignment/assets/68139415/cc4b14fc-011f-41af-af02-57e2e4e8a95b)
 
