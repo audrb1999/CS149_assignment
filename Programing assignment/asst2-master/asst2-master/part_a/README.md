@@ -7,11 +7,14 @@ Parallel + Always Spawn을 구현할 때 생겼던 문제들입니다.
 </br>
 
 ### 병렬처리가 되지 않고 순차적으로 진행되는 문제
+</br>
 
 ![image](https://github.com/audrb1999/CS149_assignment/assets/68139415/5a724c40-b5e7-4f56-9bc9-08b4f13361b0)
+</br>
 
 주어진 입력만큼 Thread를 생성하고 작업을 할당했지만 기존 Serial 코드보다 더 느려졌습니다. ( Parallel: 389.440 ms, Serial: 346.286 ms)
 
+</br>
 </br>
 
 - 원인: for loop 사용
@@ -24,6 +27,7 @@ Open MP와 같은 라이브러리와 다르게 C++ STL은 for loop는 순차적�
 </br>
 
 ## Result
+</br>
 
 ![result](https://github.com/audrb1999/CS149_assignment/assets/68139415/f9028005-7142-41f8-b72d-95aae7b59afa)
 
