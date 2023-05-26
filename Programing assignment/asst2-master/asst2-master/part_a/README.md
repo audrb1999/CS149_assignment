@@ -20,6 +20,7 @@ Parallel + Always Spawn을 구현할 때 생겼던 문제들입니다.
 - 원인: for loop 사용
 
 ![image](https://github.com/audrb1999/CS149_assignment/assets/68139415/e7202dd7-fee1-41c3-9e4a-9ee4bcf90e1f)
+</br>
 
 Open MP와 같은 라이브러리와 다르게 C++ STL은 for loop는 순차적으로 실행시켜 한 번에 한 개의 loop만을 실행하지만 While은 조건을 만족할 경우 계속 실행되어 Parallel하게 동작하기 때문에 발생했던 문제입니다.
 
@@ -45,6 +46,7 @@ Open MP와 같은 라이브러리와 다르게 C++ STL은 for loop는 순차적�
 ### loop로 인한 지연
 
 ![image](https://github.com/audrb1999/CS149_assignment/assets/68139415/2af3b1fd-05cb-4a99-b006-c6202fbc17fe)
+</br>
 
 다음과 같이 loop를 사용하여 지속적으로 작업 완료 여부를 확인하는 부분이 추가되어서 느려진 것 같습니다. 
 
@@ -54,6 +56,7 @@ Open MP와 같은 라이브러리와 다르게 C++ STL은 for loop는 순차적�
 ### Thread 교체가 없음
 
 ![image](https://github.com/audrb1999/CS149_assignment/assets/68139415/cc4b14fc-011f-41af-af02-57e2e4e8a95b)
+</br>
 
 mandelbrot 문제를 할당받는 Thread들은 따로 교체없이 프로그램이 완료될 때까지 진행되어 Thread pool이 속도 향상에 영향을 주기 힘든 구조입니다.(첫 생성된 Thread들이 128번 연산하고 join된 후 프로그램이 종료됩니다.)
 
