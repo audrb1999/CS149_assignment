@@ -6,7 +6,7 @@ Parallel + Always Spawn을 구현할 때 생겼던 문제들입니다.
 
 </br>
 
-### 병렬처리가 되지 않고 순차적으로 진행되는 문제
+## 병렬처리가 되지 않고 순차적으로 진행되는 문제
 </br>
 
 
@@ -32,7 +32,7 @@ Open MP와 같은 라이브러리와 다르게 C++ STL은 for loop는 순차적�
 </br>
 </br>
 
-## Result
+## Thread pool의 속도 
 </br>
 
 ![result](https://github.com/audrb1999/CS149_assignment/assets/68139415/f9028005-7142-41f8-b72d-95aae7b59afa)
@@ -66,6 +66,34 @@ Open MP와 같은 라이브러리와 다르게 C++ STL은 for loop는 순차적�
 </br>
 
 mandelbrot 문제를 할당받는 Thread들은 따로 교체없이 프로그램이 완료될 때까지 진행되어 Thread pool이 속도 향상에 영향을 주기 힘든 구조입니다.(첫 생성된 Thread들이 128번 연산하고 join된 후 프로그램이 종료됩니다.)
+
+</br>
+</br>
+
+loop로 진행할 작업을 지속적으로 확인하는 spin 기능은 과제에서 요구하는 기능이기 때문에 Parallel + Thread pool + Spin 부분에서 이로 인한 지연은 해결할 수 없습니다.
+
+</br>
+
+![image](https://github.com/audrb1999/CS149_assignment/assets/68139415/d8f2adf0-d436-45d5-a274-3ef2f5996d95)
+
+</br>
+</br>
+
+이 spin으로 인한 시간 지연은 다음 과제인 Parallel + Thread pool + Sleep에서 sleep 기능을 통해서 lock을 얻지 못한 Thread를 절전지켜 CPU 리소스 소비를 줄여서 해결한 것 같습니다.
+
+</br>
+</br>
+
+![image](https://github.com/audrb1999/CS149_assignment/assets/68139415/b9f584ff-8cde-4890-a0cf-a93150a3daaf)
+
+</br>
+
+결론
+
+- Thread pool을 구현하고 속도 지연을 sleep으로 해결하는 과정을 요구하는 과제인 것 같습니다.
+
+
+
 
 
 
