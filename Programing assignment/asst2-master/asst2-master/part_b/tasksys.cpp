@@ -197,7 +197,7 @@ TaskID TaskSystemParallelThreadPoolSleeping::runAsyncWithDeps(IRunnable* runnabl
 
     // 시작
     if (deps.size() == 0) {
-        printf("\n 현재 id: %d\n", current_taskid);
+        //printf("\n 현재 id: %d\n", current_taskid);
         tasks_dep[current_taskid];
     }
 
@@ -218,10 +218,15 @@ void TaskSystemParallelThreadPoolSleeping::sync() {
     scanForReadyTasks(); // 작업 실행 및 완료된 작업 찾기
     bool done_work = false;
     while (!done_work) { // 모든 작업이 완료될 때까지 실행
+
+        /* 1. 작업의 종속성 목록을 가져옵니다.
+           2. 작업의 종속성 목록에 있는 모든 작업이 완료되었는지 확인합니다.
+           3. 작업의 종속성 목록에 있는 모든 작업이 완료되면, 작업을 실행합니다.*/
+
         std::unique_lock<std::mutex> finished_task_lock(*finished_task_mutex);
         
         while (finished_tasks.empty()) {
-            finished_task_cr->wait(finished_task_lock);
+            finished_task_cr->wait(finished_task_lock);// 종속성 작업이 다 비워지면 진행
         }
         bool has_more_finished_tasks = true;
         while (has_more_finished_tasks) {
