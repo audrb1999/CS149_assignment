@@ -2,7 +2,7 @@
 
 ## current progress
 
-Program assignment 
+Programming assignment 
 - Assignment 1
 - Assignment 2
  
