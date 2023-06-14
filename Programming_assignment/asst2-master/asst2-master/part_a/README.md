@@ -1,3 +1,9 @@
+추가 정리 URL
+
+> https://north-stranger-00a.notion.site/Programming-Assignment-2-d01b7f1762504c5ea5268dce7fe314ea?pvs=4
+
+</br>
+
 >  Thread로 병렬처리하는 문제는 mandelbrot set으로 각 픽셀 값은 복소 평면에서의 좌표에 따라 독립적으로 계산할 수 있기 때문에 종속성이 없습니다.
 
 </br>
@@ -30,10 +36,6 @@ Parallel + Always Spawn을 구현할 때 생겼던 문제들입니다.
 Open MP와 같은 라이브러리와 다르게 C++ STL은 for loop는 순차적으로 실행시켜 한 번에 한 개의 loop만을 실행하지만 While은 조건을 만족할 경우 계속 실행되어 Parallel하게 동작하기 때문에 발생했던 문제입니다.
 
 </br>
-
-추가 정리 URL
-
-> https://north-stranger-00a.notion.site/Programming-Assignment-2-d01b7f1762504c5ea5268dce7fe314ea?pvs=4
 </br>
 
 ## Thread pool의 속도 
