@@ -151,14 +151,7 @@ void TaskSystemParallelSpawn::sync() {
  * ================================================================
  */
 
-/*
-* 1. thread pool로 사용할 수 있는 work thread pool을 생성
-* 2. thread pool에서 큐에 task을 추가
-* 3. thread가 큐에서 task를 가져와서 처리하는데 이때 mutex lock을 걸음
-* 4. task가 끝나면 새 task를 가져옴
-* 5. 위 과정을 반복
 
-*/
 
 
 const char* TaskSystemParallelThreadPoolSpinning::name() {
