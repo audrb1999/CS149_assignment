@@ -165,9 +165,9 @@ void TaskSystemParallelThreadPoolSpinning::runThreadParallelThreadPoolSpinning(i
         int i = thread_state->current_task; // i를 현재 task로 바꿈
         int total_task = thread_state->num_total_tasks;// 총 task를 num task로 바꿈
 
-        if (total_task == 0 || i >= total_task) {// task가 완료되었다면
+        if (total_task == 0 || i >= total_task) {// 모든 task가 완료되었다면
             thread_state->main_mutex->unlock();// 락을 풀음
-            // 완료되었는지 while로 continue해서 확인
+            
             continue;
         }
 
