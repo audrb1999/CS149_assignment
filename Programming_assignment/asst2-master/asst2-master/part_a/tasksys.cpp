@@ -187,15 +187,14 @@ TaskSystemParallelThreadPoolSpinning::TaskSystemParallelThreadPoolSpinning(int n
     // Implementations are free to add new class member variables
     // (requiring changes to tasksys.h).
     // 여기서 지정된 수의 스레드를 생성
-    this->thread_state = new ThreadState();// 각 state를 설정해주는 객체를 만들고
-    this->num_threads = num_threads;// 스레드 개수를 설정
+    this->thread_state = new ThreadState();
+    this->num_threads = num_threads;
     for (int i = 0; i < num_threads; i++) { 
         this->pool.push_back(std::thread(&TaskSystemParallelThreadPoolSpinning::runThreadParallelThreadPoolSpinning, this, i));
     }
 }
 
 
-// 위에서 pool에 전부 push한 경우 실행이 끝날 때까지 대기
 TaskSystemParallelThreadPoolSpinning::~TaskSystemParallelThreadPoolSpinning() {
     this->thread_state->done_flag = true;
     for (int i = 0; i < this->num_threads; i++) {
@@ -214,7 +213,7 @@ void TaskSystemParallelThreadPoolSpinning::run(IRunnable* runnable, int num_tota
     thread_state->task_done = 0;
     thread_state->main_mutex->unlock();
     bool done_work = false;
-    // 모든 작업이 완료되었는지 확인
+    
     while (!done_work) {
         thread_state->task_done_mutex->lock();
         done_work = thread_state->task_done >= thread_state->num_total_tasks;
