@@ -160,23 +160,23 @@ const char* TaskSystemParallelThreadPoolSpinning::name() {
 void TaskSystemParallelThreadPoolSpinning::runThreadParallelThreadPoolSpinning(int thread_number) {
     
 
-    while (!thread_state->done_flag) {// 스레드가 끝나지 않았다면 = 진행중이라면
-        thread_state->main_mutex->lock(); // 뮤텍스 락을 걸고
-        int i = thread_state->current_task; // i를 현재 task로 바꿈
-        int total_task = thread_state->num_total_tasks;// 총 task를 num task로 바꿈
+    while (!thread_state->done_flag) {
+        thread_state->main_mutex->lock(); 
+        int i = thread_state->current_task; 
+        int total_task = thread_state->num_total_tasks;
 
-        if (total_task == 0 || i >= total_task) {// 모든 task가 완료되었다면
-            thread_state->main_mutex->unlock();// 락을 풀음
+        if (total_task == 0 || i >= total_task) {
+            thread_state->main_mutex->unlock();
             
             continue;
         }
 
-        thread_state->current_task++; //  다 끝나지 않았다면 이어서 진행, 새 task를 가져오고
-        thread_state->main_mutex->unlock();// lock을 풀고
-        thread_state->runnable->runTask(i, total_task); // 작업을 할당
-        thread_state->task_done_mutex->lock(); // 완료된 작업 수를 수정할 때 다른 스레드들이 접근하지 못하게
-        thread_state->task_done++;// 완료된 작업 수 증가 시키고
-        thread_state->task_done_mutex->unlock(); // 다시 lock을 풀음
+        thread_state->current_task++;
+        thread_state->main_mutex->unlock();
+        thread_state->runnable->runTask(i, total_task);
+        thread_state->task_done_mutex->lock(); 
+        thread_state->task_done++;
+        thread_state->task_done_mutex->unlock(); 
      }
 }
 
