@@ -12,7 +12,7 @@ Programming assignment
 
 - Assignment 3
     - Part 1: https://north-stranger-00a.notion.site/Part-1-Assignment-3-A-Simple-CUDA-Renderer-c720194378bd4446a2182e53ebf959a7?pvs=4
-    - Part 2: [[https://www.notion.so/Part-2-Assignment-3-A-Simple-CUDA-Renderer-d08dcf77e3bf486e8dcc5733cffd1f27](https://north-stranger-00a.notion.site/Part-2-Assignment-3-A-Simple-CUDA-Renderer-d08dcf77e3bf486e8dcc5733cffd1f27?pvs=4)
+    - Part 2: https://www.notion.so/Part-2-Assignment-3-A-Simple-CUDA-Renderer-d08dcf77e3bf486e8dcc5733cffd1f27](https://north-stranger-00a.notion.site/Part-2-Assignment-3-A-Simple-CUDA-Renderer-d08dcf77e3bf486e8dcc5733cffd1f27?pvs=4)
  
  </br>
 
