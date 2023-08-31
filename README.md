@@ -14,7 +14,9 @@ Programming assignment
     - Part 1: https://north-stranger-00a.notion.site/Part-1-Assignment-3-A-Simple-CUDA-Renderer-c720194378bd4446a2182e53ebf959a7?pvs=4
     - Part 2: https://north-stranger-00a.notion.site/Part-2-Assignment-3-A-Simple-CUDA-Renderer-d08dcf77e3bf486e8dcc5733cffd1f27?pvs=4
     - render: https://www.notion.so/Renderer-Assignment-3-A-Simple-CUDA-Renderer-3d9fa72a229544b5aabd05cc885ae094 (08.16 이후 내용이 추가되었습니다.)
- 
+
+ - Assignment 4
+   - PageRank: https://north-stranger-00a.notion.site/Page-Rank-Assignment-4-Big-Graph-Processing-in-OpenMP-80a5fcb511774859bb393e6940e9daac?pvs=4
  </br>
 
 Written assignment
