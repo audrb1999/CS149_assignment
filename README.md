@@ -17,7 +17,8 @@ Programming assignment
 
  - Assignment 4
    - PageRank: https://north-stranger-00a.notion.site/Page-Rank-Assignment-4-Big-Graph-Processing-in-OpenMP-80a5fcb511774859bb393e6940e9daac?pvs=4
-   - BFS Top-Down: https://north-stranger-00a.notion.site/Top-Down-Assignment-4-Big-Graph-Processing-in-OpenMP-e4c5fa90be4e421fa06ac9ac152c1eb6?pvs=4 (Topdown과제는 마무리가 되었고 내용을 정리하는 중입니다!)
+   - BFS Top-Down: https://north-stranger-00a.notion.site/Top-Down-Assignment-4-Big-Graph-Processing-in-OpenMP-e4c5fa90be4e421fa06ac9ac152c1eb6?pvs=4
+   - BFS Bottom-Up: https://north-stranger-00a.notion.site/Bottom-Up-Assignment-4-Big-Graph-Processing-in-OpenMP-3724abf0012c470dbc2db8009c262ba7?pvs=4
  </br>
 
 Written assignment
