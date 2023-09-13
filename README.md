@@ -20,6 +20,7 @@ Programming assignment
    - BFS Top-Down: https://north-stranger-00a.notion.site/Top-Down-Assignment-4-Big-Graph-Processing-in-OpenMP-e4c5fa90be4e421fa06ac9ac152c1eb6?pvs=4
    - BFS Bottom-Up: https://north-stranger-00a.notion.site/Bottom-Up-Assignment-4-Big-Graph-Processing-in-OpenMP-3724abf0012c470dbc2db8009c262ba7?pvs=4
  </br>
+ - BFS Hybrid: https://north-stranger-00a.notion.site/Hybrid-BFS-Assignment-4-Big-Graph-Processing-in-OpenMP-de3d0b4811584e6793085a39ecfa990c?pvs=4
 
 Written assignment
 - Written Assignment 1 
